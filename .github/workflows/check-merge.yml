@@ -1,0 +1,32 @@
+# Checking if the branch for review is to standard (linting, testing and building successfully)
+name: Merge Safety Check
+
+on:
+    pull_request:
+        branches: [main]
+
+permissions:
+    checks: write
+    contents: write
+
+jobs:
+    lint-test-build:
+        name: Linting, testing and building
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Setup node
+              uses: actions/setup-node@v4
+              with:
+                  node-version-file: ".nvmrc"
+                  cache: yarn
+
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
+
+            - name: Run Linter (Eslint, TSC & Prettier)
+              run: yarn lint
+
+            - name: Test
+              run: yarn test:ci
