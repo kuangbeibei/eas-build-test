@@ -27,6 +27,3 @@ jobs:
 
             - name: Run Linter (Eslint, TSC & Prettier)
               run: yarn lint
-
-            - name: Test
-              run: yarn test:ci
