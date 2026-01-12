@@ -16,7 +16,6 @@
     },
     "ios-simulator": {
       "extends": "development",
-      "channel": "ios-simulator",
       "ios": {
         "simulator": true
       }
