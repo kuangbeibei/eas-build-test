@@ -35,20 +35,12 @@
       "android": {
         "track": "internal",
         "releaseStatus": "draft"
-      },
-      "ios": {
-        "appleId": "",
-        "ascAppId": ""
       }
     },
     "production": {
       "android": {
         "track": "internal",
         "releaseStatus": "completed"
-      },
-      "ios": {
-        "appleId": "",
-        "ascAppId": ""
       }
     }
   }
