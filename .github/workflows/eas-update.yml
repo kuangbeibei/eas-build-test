@@ -1,0 +1,41 @@
+name: EAS Update
+on:
+    push:
+        branches: [main, master]
+    pull_request:
+        branches: [main]
+
+jobs:
+    update:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0 # Important to fetch tags, which are used in app.config.js
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: ".nvmrc"
+                  cache: yarn
+
+            - name: Setup Expo and EAS
+              uses: expo/expo-github-action@v8
+              with:
+                  eas-version: latest
+                  token: ${{ secrets.EXPO_TOKEN }}
+
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
+
+            - name: Set environment based on branch
+              run: |
+                  if [[ ${{ github.ref }} == 'refs/heads/master' ]]; then
+                    echo "CHANNEL=production" >> $GITHUB_ENV
+                  elif [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+                    echo "CHANNEL=staging" >> $GITHUB_ENV
+                  else
+                    echo "CHANNEL=development" >> $GITHUB_ENV
+                  fi
+
+            - name: Create update
+              run: eas update --channel=$CHANNEL --auto --non-interactive
