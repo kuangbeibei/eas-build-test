@@ -9,17 +9,17 @@
       "distribution": "internal",
       "channel": "development"
     },
-    "internal": {
-      "autoIncrement": true,
-      "distribution": "internal",
-      "channel": "staging"
-    },
     "ios-simulator": {
       "extends": "development",
       "channel": "ios-simulator",
       "ios": {
         "simulator": true
       }
+    },
+    "internal": {
+      "autoIncrement": true,
+      "distribution": "internal",
+      "channel": "staging"
     },
     "staging": {
       "autoIncrement": true,
